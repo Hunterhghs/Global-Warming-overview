@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Warming Overview — Thermal Pulse</title>
+<meta name="description" content="A comprehensive overview of global warming: the science, impacts, and solutions. Data-driven, rigorously sourced.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ========================================
+   THERMAL PULSE DESIGN SYSTEM — Stitch v2
+   ======================================== */
+
+:root {
+  /* Surface layers */
+  --bg: #0c0c1f;
+  --bg-surface: #111128;
+  --bg-container: #161632;
+  --bg-container-high: #1c1c3d;
+  --bg-container-highest: #222247;
+  --bg-bright: #272752;
+
+  /* Brand colors */
+  --primary: #ff7c65;
+  --primary-container: #fd644a;
+  --primary-dim: #ff725a;
+  --secondary: #ffb875;
+  --secondary-dim: #fe9824;
+  --tertiary: #65ffc8;
+
+  /* Text */
+  --on-surface: #e5e3ff;
+  --on-surface-variant: #a8a7d5;
+  --outline: #72719c;
+  --outline-variant: #44446c;
+
+  /* Error */
+  --error: #fd6f85;
+
+  /* Typography */
+  --font-headline: 'Space Grotesk', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+
+  /* Spacing (4px baseline) */
+  --unit: 4px;
+  --gutter: 16px;
+  --margin-desktop: 64px;
+  --margin-mobile: 16px;
+  --container-max: 1280px;
+
+  /* Typography scale */
+  --text-headline-lg: 700 48px/1.1 var(--font-headline);
+  --text-headline-md: 600 32px/1.2 var(--font-headline);
+  --text-headline-sm: 600 24px/1.25 var(--font-headline);
+  --text-body-lg: 400 18px/1.6 var(--font-body);
+  --text-body-md: 400 16px/1.5 var(--font-body);
+  --text-label-sm: 600 12px/1 var(--font-body);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--on-surface);
+}
+
+body {
+  font: var(--text-body-md);
+  background: var(--bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar — Thermal Pulse custom */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--primary-dim); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--outline-variant);
+  padding: 0 var(--margin-desktop);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font: 600 18px/1 var(--font-headline);
+  color: var(--primary);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: 16px 16px;
+  font: 500 13px/1 var(--font-body);
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--outline-variant);
+  color: var(--on-surface);
+  padding: 8px 12px;
+  font: var(--text-label-sm);
+  cursor: pointer;
+}
+
+/* ========================================
+   HERO
+   ======================================== */
+
+.hero {
+  position: relative;
+  padding: 120px var(--margin-desktop) 80px;
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255,124,101,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 80% 60%, rgba(255,184,117,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 40% at 20% 50%, rgba(101,255,200,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-label {
+  font: var(--text-label-sm);
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+
+.hero-temp {
+  font: 700 clamp(96px, 15vw, 180px)/0.9 var(--font-headline);
+  color: var(--primary);
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  text-shadow: 0 0 80px rgba(255,124,101,0.3);
+}
+
+.hero-sup {
+  font: 600 clamp(24px, 4vw, 40px)/1 var(--font-headline);
+  color: var(--primary-dim);
+  vertical-align: super;
+}
+
+.hero-subtitle {
+  font: var(--text-body-lg);
+  color: var(--on-surface-variant);
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+
+.hero-meta {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--outline-variant);
+  font: var(--text-label-sm);
+  color: var(--on-surface-variant);
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   STATS ROW
+   ======================================== */
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--outline-variant);
+  border-top: 1px solid var(--outline-variant);
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.stat-card {
+  background: var(--bg-container);
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-value {
+  font: 700 clamp(28px, 4vw, 40px)/1.1 var(--font-headline);
+  color: var(--on-surface);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.stat-value.accent-primary { color: var(--primary); }
+.stat-value.accent-secondary { color: var(--secondary); }
+.stat-value.accent-tertiary { color: var(--tertiary); }
+
+.stat-label {
+  font: var(--text-label-sm);
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.stat-bar {
+  height: 3px;
+  width: 100%;
+  max-width: 80px;
+  margin: 0 auto;
+}
+
+.stat-bar.primary { background: var(--primary); }
+.stat-bar.secondary { background: var(--secondary); }
+.stat-bar.tertiary { background: var(--tertiary); }
+.stat-bar.error { background: var(--error); }
+
+/* ========================================
+   SECTIONS
+   ======================================== */
+
+.section {
+  padding: 80px var(--margin-desktop);
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: var(--outline-variant);
+  margin: 0 var(--margin-desktop);
+}
+
+.section-label {
+  font: var(--text-label-sm);
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font: var(--text-headline-md);
+  color: var(--on-surface);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font: var(--text-body-lg);
+  color: var(--on-surface-variant);
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+/* Two-column */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.two-col-text p {
+  margin-bottom: 16px;
+  color: var(--on-surface-variant);
+}
+
+.two-col-visual {
+  background: var(--bg-container);
+  border: 1px solid var(--outline-variant);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--outline-variant);
+  border: 1px solid var(--outline-variant);
+}
+
+.card-grid.col-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid.col-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+  background: var(--bg-container);
+  padding: 40px 32px;
+  transition: background 0.2s;
+}
+
+.card:hover {
+  background: var(--bg-container-high);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.card-num {
+  font: 700 48px/1 var(--font-headline);
+  color: var(--primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.card-title {
+  font: 600 20px/1.3 var(--font-headline);
+  color: var(--on-surface);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.card-text {
+  font: var(--text-body-md);
+  color: var(--on-surface-variant);
+  margin-bottom: 20px;
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 13px/1 var(--font-body);
+  color: var(--primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.card-link:hover { color: var(--secondary); }
+
+/* ========================================
+   CHART CONTAINERS
+   ======================================== */
+
+.chart-container {
+  background: var(--bg-container);
+  border: 1px solid var(--outline-variant);
+  padding: 32px;
+  position: relative;
+}
+
+.chart-container canvas {
+  max-height: 400px;
+}
+
+.chart-label {
+  font: var(--text-label-sm);
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+/* ========================================
+   ACCENT ROW
+   ======================================== */
+
+.accent-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--outline-variant);
+  border: 1px solid var(--outline-variant);
+}
+
+.accent-card {
+  background: var(--bg-container);
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.accent-card-num {
+  font: 700 56px/1 var(--font-headline);
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.accent-card-num.coral { color: var(--primary); }
+.accent-card-num.amber { color: var(--secondary); }
+.accent-card-num.teal { color: var(--tertiary); }
+
+.accent-card-label {
+  font: var(--text-label-sm);
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+.accent-card-text {
+  font: var(--text-body-md);
+  color: var(--on-surface-variant);
+}
+
+/* ========================================
+   TIMELINE
+   ======================================== */
+
+.timeline {
+  position: relative;
+  padding-left: 32px;
+  border-left: 2px solid var(--outline-variant);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  padding-left: 32px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -38px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+}
+
+.timeline-year {
+  font: 700 14px/1 var(--font-headline);
+  color: var(--primary);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.timeline-title {
+  font: 600 18px/1.3 var(--font-headline);
+  color: var(--on-surface);
+  margin-bottom: 8px;
+}
+
+.timeline-text {
+  font: var(--text-body-md);
+  color: var(--on-surface-variant);
+}
+
+/* ========================================
+   QUOTE
+   ======================================== */
+
+.blockquote {
+  border-left: 3px solid var(--primary);
+  padding: 24px 32px;
+  margin: 48px 0;
+  background: var(--bg-container);
+}
+
+.blockquote-text {
+  font: 500 20px/1.5 var(--font-headline);
+  color: var(--on-surface);
+  margin-bottom: 12px;
+}
+
+.blockquote-source {
+  font: var(--text-label-sm);
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer {
+  border-top: 1px solid var(--outline-variant);
+  padding: 48px var(--margin-desktop);
+  background: var(--bg);
+}
+
+.footer-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-brand {
+  font: 600 16px/1 var(--font-headline);
+  color: var(--primary);
+}
+
+.footer-text {
+  font: var(--text-label-sm);
+  color: var(--on-surface-variant);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-links a {
+  font: var(--text-label-sm);
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-links a:hover { color: var(--primary); }
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 900px) {
+  :root {
+    --margin-desktop: 24px;
+    --text-headline-lg: 700 36px/1.1 var(--font-headline);
+    --text-headline-md: 600 26px/1.2 var(--font-headline);
+  }
+
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: block; }
+
+  .nav.open .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+
+  .nav.open .nav-links a {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+
+  .hero { padding: 80px 24px 60px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; gap: 32px; }
+  .card-grid,
+  .card-grid.col-2,
+  .card-grid.col-4 { grid-template-columns: 1fr; }
+  .accent-row { grid-template-columns: 1fr; }
+  .section { padding: 60px var(--margin-desktop); }
+  .section-divider { margin: 0 var(--margin-desktop); }
+}
+
+@media (max-width: 500px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .hero-temp { font-size: 72px; }
+}
+
+/* ========================================
+   UTILITY
+   ======================================== */
+
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-tertiary { color: var(--tertiary); }
+
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font: var(--text-label-sm);
+  letter-spacing: 0.05em;
+  border: 1px solid;
+}
+
+.tag-primary { color: var(--primary); border-color: var(--primary); }
+.tag-secondary { color: var(--secondary); border-color: var(--secondary); }
+.tag-tertiary { color: var(--tertiary); border-color: var(--tertiary); }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     NAVIGATION
+     ============================================ -->
+<nav class="nav" id="nav">
+  <a href="#overview" class="nav-logo">GLOBAL WARMING</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#overview" class="active">Overview</a></li>
+    <li><a href="#science">The Science</a></li>
+    <li><a href="#impacts">Impacts</a></li>
+    <li><a href="#solutions">Solutions</a></li>
+    <li><a href="#data">Data</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle navigation">MENU</button>
+</nav>
+
+<!-- ============================================
+     HERO — Overview
+     ============================================ -->
+<section class="hero" id="overview">
+  <div class="hero-content">
+    <div class="hero-label">Global Surface Temperature Increase</div>
+    <div class="hero-temp">1.2<span class="hero-sup">°C</span></div>
+    <p class="hero-subtitle">Earth has warmed 1.2°C since pre-industrial levels (1850–1900). The rate of warming since 1970 is unprecedented in at least 2,000 years.</p>
+    <div class="hero-meta">IPCC AR6 · 2024 Update · WMO State of the Climate</div>
+  </div>
+</section>
+
+<!-- ============================================
+     KEY STATS ROW
+     ============================================ -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-value accent-primary">421</div>
+    <div class="stat-label">ppm CO₂</div>
+    <div class="stat-bar primary"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value accent-secondary">3.6</div>
+    <div class="stat-label">mm/yr Sea Level Rise</div>
+    <div class="stat-bar secondary"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value accent-tertiary">1960–</div>
+    <div class="stat-label">2024 Records</div>
+    <div class="stat-bar tertiary"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color: var(--error)">2030s</div>
+    <div class="stat-label">1.5°C Threshold</div>
+    <div class="stat-bar error"></div>
+  </div>
+</div>
+
+<!-- ============================================
+     INTRO — Two Column
+     ============================================ -->
+<section class="section">
+  <div class="two-col">
+    <div class="two-col-text">
+      <div class="section-label">Understanding the Crisis</div>
+      <h2 class="section-title">The Climate Is Changing Faster Than Any Point in Recorded History</h2>
+      <p>Global warming refers to the long-term heating of Earth's climate system observed since the pre-industrial period due to human activities — primarily the burning of fossil fuels, which increases heat-trapping greenhouse gas levels in the atmosphere.</p>
+      <p>The planet's average surface temperature has risen about 1.2°C since the late 19th century, a change driven largely by increased carbon dioxide emissions and other human activities. Most of the warming occurred in the past 40 years, with the seven most recent years being the warmest on record.</p>
+      <p>The evidence is overwhelming: 97% of actively publishing climate scientists agree that climate-warming trends over the past century are extremely likely due to human activities. This is not a debate — it is a measured, observed, and independently verified reality.</p>
+    </div>
+    <div class="two-col-visual">
+      <canvas id="warmingTrendChart" aria-label="Global temperature anomaly chart showing rising trend since 1880"></canvas>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================
+     NAV CARDS — Three Pillars
+     ============================================ -->
+<section class="section">
+  <div class="card-grid">
+    <a href="#science" class="card" style="text-decoration: none; color: inherit;">
+      <span class="card-icon">🔬</span>
+      <h3 class="card-title">The Science</h3>
+      <p class="card-text">How greenhouse gases trap heat, the carbon cycle, climate feedback loops, and why 1.2°C matters more than it sounds.</p>
+      <span class="card-link">Explore →</span>
+    </a>
+    <a href="#impacts" class="card" style="text-decoration: none; color: inherit;">
+      <span class="card-icon">🌍</span>
+      <h3 class="card-title">Impacts</h3>
+      <p class="card-text">Sea level rise, extreme weather, ecosystem collapse, food security, human displacement — what's already happening and what's projected.</p>
+      <span class="card-link">Explore →</span>
+    </a>
+    <a href="#solutions" class="card" style="text-decoration: none; color: inherit;">
+      <span class="card-icon">⚡</span>
+      <h3 class="card-title">Solutions</h3>
+      <p class="card-text">Renewable energy, carbon pricing, reforestation, technological innovation, and the policy pathways to net zero.</p>
+      <span class="card-link">Explore →</span>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================
+     THE SCIENCE
+     ============================================ -->
+<section class="section" id="science">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">The Science of Global Warming</h2>
+  <p class="section-subtitle">The fundamental physics has been understood since the 19th century. Greenhouse gases trap infrared radiation — more gas means more heat retained. The rest is measurement, modeling, and verification.</p>
+
+  <!-- Greenhouse Effect Cards -->
+  <div class="card-grid" style="margin-bottom: 48px;">
+    <div class="card">
+      <span class="card-num">01</span>
+      <h3 class="card-title">The Greenhouse Effect</h3>
+      <p class="card-text">Solar radiation passes through the atmosphere and warms Earth's surface. The surface radiates heat back as infrared. Greenhouse gases (CO₂, CH₄, N₂O, water vapor) absorb and re-radiate this infrared energy, trapping heat — exactly as a greenhouse does. Without this natural effect, Earth's average temperature would be about −18°C instead of +15°C.</p>
+      <span class="tag tag-primary">Physics · 1824</span>
+    </div>
+    <div class="card">
+      <span class="card-num">02</span>
+      <h3 class="card-title">Enhanced Greenhouse Effect</h3>
+      <p class="card-text">Human activities have increased atmospheric CO₂ by 50% since 1750 — from ~280 ppm to ~421 ppm. This additional CO₂ amplifies the natural greenhouse effect, trapping more heat. Methane (CH₄) has more than doubled. The result: ~3.2 W/m² of additional radiative forcing — equivalent to adding the energy of ~800,000 Hiroshima bombs per day to the climate system.</p>
+      <span class="tag tag-secondary">Anthropogenic · Measured</span>
+    </div>
+    <div class="card">
+      <span class="card-num">03</span>
+      <h3 class="card-title">Feedback Loops</h3>
+      <p class="card-text">Warming triggers self-reinforcing cycles: melting ice reduces albedo (reflectivity), causing more absorption. Thawing permafrost releases methane. Warmer oceans absorb less CO₂. Forest fires release stored carbon. These feedbacks mean that initial warming can cascade — a critical reason why every fraction of a degree matters.</p>
+      <span class="tag tag-tertiary">Systems · Amplifying</span>
+    </div>
+  </div>
+
+  <!-- Carbon Budget -->
+  <div class="blockquote">
+    <p class="blockquote-text">"To limit warming to 1.5°C with 50% probability, the remaining carbon budget is approximately 275 GtCO₂. At current emission rates (~40 GtCO₂/yr), this budget is exhausted in under 7 years."</p>
+    <div class="blockquote-source">IPCC Sixth Assessment Report, Working Group I (2021/2024)</div>
+  </div>
+
+  <!-- CO2 Timeline -->
+  <h3 style="font: var(--text-headline-sm); margin-bottom: 32px;">Atmospheric CO₂ Concentration: A 2,000-Year View</h3>
+  <div class="chart-container" style="margin-bottom: 48px;">
+    <div class="chart-label">CO₂ (ppm) · Ice Core Data + Mauna Loa Direct Measurements</div>
+    <canvas id="co2Chart" aria-label="CO2 concentration chart showing unprecedented rise since industrial revolution"></canvas>
+  </div>
+
+  <div class="card-grid col-2">
+    <div class="card">
+      <h3 class="card-title">How We Know: The Evidence Base</h3>
+      <p class="card-text"><strong>Direct Measurements:</strong> Thermometer records since 1850, satellite measurements since 1979, Argo ocean float network since 2000.</p>
+      <p class="card-text"><strong>Proxy Data:</strong> Ice cores (800,000 years of trapped air bubbles), tree rings, coral skeletons, ocean sediments, speleothems — all independently cross-validated.</p>
+      <p class="card-text"><strong>Climate Models:</strong> General Circulation Models (GCMs) that solve physical equations for atmosphere, ocean, land, and ice. When run without human emissions, they show no warming. With emissions, they reproduce observed temperatures with remarkable accuracy.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Key Greenhouse Gases</h3>
+      <p class="card-text"><strong>CO₂ — Carbon Dioxide:</strong> Primary driver. Lifetime: centuries to millennia. Current: 421 ppm (+50%). Sources: fossil fuels, deforestation, cement.</p>
+      <p class="card-text"><strong>CH₄ — Methane:</strong> 28× more potent than CO₂ over 100 years (84× over 20). Lifetime: ~12 years. Sources: agriculture, fossil fuel extraction, landfills.</p>
+      <p class="card-text"><strong>N₂O — Nitrous Oxide:</strong> 265× more potent than CO₂. Lifetime: ~121 years. Sources: agriculture (fertilizers), industrial processes, biomass burning.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================
+     IMPACTS
+     ============================================ -->
+<section class="section" id="impacts">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">Impacts: What Warming Means</h2>
+  <p class="section-subtitle">The effects of global warming are not a future problem — they are measurable, observable, and accelerating today. Here is what the data shows across five critical dimensions.</p>
+
+  <!-- Impact Stat Cards -->
+  <div class="accent-row" style="margin-bottom: 48px;">
+    <div class="accent-card">
+      <div class="accent-card-num coral">20cm</div>
+      <div class="accent-card-label">Sea Level Rise Since 1900</div>
+      <p class="accent-card-text">Global mean sea level has risen ~20 cm since 1901, with the rate accelerating from 1.4 mm/yr (1901-1990) to 3.6 mm/yr (2006-2024). Thermal expansion + ice melt.</p>
+    </div>
+    <div class="accent-card">
+      <div class="accent-card-num amber">5×</div>
+      <div class="accent-card-label">Increase in Extreme Weather Events</div>
+      <p class="accent-card-text">The number of weather-related disasters has increased five-fold over the past 50 years, driven by climate change, according to the World Meteorological Organization.</p>
+    </div>
+    <div class="accent-card">
+      <div class="accent-card-num teal">1M</div>
+      <div class="accent-card-label">Species at Risk of Extinction</div>
+      <p class="accent-card-text">IPBES reports that ~1 million animal and plant species face extinction, many within decades — climate change is the third most significant driver after habitat loss and exploitation.</p>
+    </div>
+  </div>
+
+  <!-- Detailed Impacts -->
+  <div class="card-grid col-2" style="margin-bottom: 48px;">
+    <div class="card">
+      <h3 class="card-title">Rising Seas & Coastal Risk</h3>
+      <p class="card-text">By 2100, sea levels are projected to rise 0.3–1.1 m under low-emission scenarios and 0.6–2.0 m under high-emission scenarios. Over 600 million people live in coastal zones less than 10 m above sea level. Cities at acute risk include Jakarta, Mumbai, Shanghai, Miami, and Bangkok. Saltwater intrusion threatens freshwater supplies and agriculture in river deltas from the Mekong to the Nile.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Extreme Weather</h3>
+      <p class="card-text">A warmer atmosphere holds more water vapor (~7% per 1°C), intensifying precipitation and flooding. Simultaneously, warming increases evaporation, amplifying drought severity and wildfire risk. Hurricane intensity (Category 4-5) has increased. Heat waves that occurred once per decade in the 1850-1900 period now occur ~2.8 times per decade — and at 1.5°C warming, 4.1 times.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Ecosystem Disruption</h3>
+      <p class="card-text">Coral reefs: 70-90% projected to decline at 1.5°C warming; >99% at 2°C. Arctic sea ice declining at 13% per decade. Species range shifts poleward at ~17 km per decade on land and ~72 km per decade in the ocean. Phenological mismatches: spring events advancing 2-3 days per decade, disrupting food webs. Amazon rainforest approaching a tipping point where it transitions to savanna.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Human Systems</h3>
+      <p class="card-text"><strong>Food Security:</strong> Each 1°C of warming reduces global wheat yields ~6%, rice ~3%, maize ~7%. <strong>Health:</strong> Heat-related mortality rising; vector-borne diseases (malaria, dengue) expanding range. <strong>Displacement:</strong> World Bank projects 216 million people could be internally displaced by 2050 due to climate impacts. <strong>Economic Cost:</strong> Estimated $178 trillion in cumulative damages by 2070 under business-as-usual (Deloitte).</p>
+    </div>
+  </div>
+
+  <!-- Regional impact viz -->
+  <div class="chart-container">
+    <div class="chart-label">Projected Global Surface Temperature Change by Scenario (°C relative to 1850-1900)</div>
+    <canvas id="scenariosChart" aria-label="Climate projection scenarios showing temperature paths under different emissions futures"></canvas>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================
+     SOLUTIONS
+     ============================================ -->
+<section class="section" id="solutions">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">Solutions: Pathways to Net Zero</h2>
+  <p class="section-subtitle">The technology exists. The economics increasingly favor action. What's needed is deployment velocity, policy alignment, and global coordination at a scale unprecedented in human history.</p>
+
+  <!-- Energy Transition Cards -->
+  <div class="card-grid" style="margin-bottom: 48px;">
+    <div class="card">
+      <span class="card-icon">☀️</span>
+      <h3 class="card-title">Renewable Energy</h3>
+      <p class="card-text">Solar PV costs have fallen 89% since 2010. Onshore wind down 70%. Renewables are now the cheapest source of new electricity in countries representing >90% of global GDP. In 2024, renewables accounted for ~30% of global electricity generation — up from 19% in 2000. The IEA projects renewables will surpass coal as the largest electricity source by 2025.</p>
+      <span class="tag tag-primary">Energy</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏭</span>
+      <h3 class="card-title">Carbon Pricing</h3>
+      <p class="card-text">73 carbon pricing initiatives now cover ~23% of global emissions. The EU Emissions Trading System (ETS) covers ~40% of EU emissions, with carbon prices reaching €100/tonne in 2024. Studies show carbon pricing is the single most efficient policy instrument — it internalizes the externality and lets markets find the cheapest abatement path.</p>
+      <span class="tag tag-secondary">Policy</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌳</span>
+      <h3 class="card-title">Nature-Based Solutions</h3>
+      <p class="card-text">Reforestation, afforestation, wetland restoration, and soil carbon sequestration could provide ~30% of the mitigation needed by 2030. The Bonn Challenge aims to restore 350 million hectares of degraded land by 2030. Mangrove restoration protects coasts AND sequesters carbon at 4-5× the rate of terrestrial forests.</p>
+      <span class="tag tag-tertiary">Ecosystem</span>
+    </div>
+  </div>
+
+  <!-- Technology Deep-Dive -->
+  <div class="card-grid col-2" style="margin-bottom: 48px;">
+    <div class="card">
+      <h3 class="card-title">Electrification & Efficiency</h3>
+      <p class="card-text">Transport (~15% of emissions): EV sales reached 18% of global car sales in 2024, up from 4% in 2020. Heat pumps outsold gas furnaces in the US for the first time in 2023. Industrial electrification, green hydrogen for hard-to-abate sectors (steel, cement, chemicals), and building efficiency retrofits represent massive mitigation wedges.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Carbon Removal</h3>
+      <p class="card-text">All IPCC pathways that limit warming to 1.5°C require carbon dioxide removal (CDR). Direct Air Capture (DAC): Climeworks' Orca plant captures 4,000 tCO₂/yr; scaled facilities targeting megaton scale by 2030. Enhanced weathering, biochar, ocean alkalinity enhancement, and BECCS (bioenergy with CCS) are the portfolio. Current global CDR: ~2 GtCO₂/yr (mostly forests). Required by 2050: 5-10 GtCO₂/yr.</p>
+    </div>
+  </div>
+
+  <!-- Policy Timeline -->
+  <h3 style="font: var(--text-headline-sm); margin-bottom: 32px;">Key Climate Policy Milestones</h3>
+  <div class="timeline" style="margin-bottom: 48px;">
+    <div class="timeline-item">
+      <div class="timeline-year">1992</div>
+      <div class="timeline-title">UN Framework Convention on Climate Change (UNFCCC)</div>
+      <p class="timeline-text">Signed by 154 nations at the Rio Earth Summit. Established the principle of "common but differentiated responsibilities" and set the framework for all subsequent climate treaties.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1997</div>
+      <div class="timeline-title">Kyoto Protocol</div>
+      <p class="timeline-text">First legally binding emissions reduction targets for developed nations. Covered ~5% reduction from 1990 levels by 2008-2012. Limited by US non-ratification and exclusion of developing nations from binding targets.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2015</div>
+      <div class="timeline-title">Paris Agreement</div>
+      <p class="timeline-text">Landmark accord signed by 196 parties. Goal: limit warming to "well below 2°C," pursuing 1.5°C. Nationally Determined Contributions (NDCs) with five-year ratchet mechanism. Universally ratified by 2017.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2021</div>
+      <div class="timeline-title">Glasgow Climate Pact (COP26)</div>
+      <p class="timeline-text">First explicit mention of fossil fuels in a COP decision. Agreement to "phase down" unabated coal power and "phase out" inefficient fossil fuel subsidies. Completion of the Paris Rulebook.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2023</div>
+      <div class="timeline-title">Global Stocktake (COP28)</div>
+      <p class="timeline-text">First Global Stocktake concluded with a call to "transition away from fossil fuels." Agreement to triple renewable energy capacity and double energy efficiency improvement rates by 2030.</p>
+    </div>
+  </div>
+
+  <div class="blockquote">
+    <p class="blockquote-text">"The world is not on track to limit global warming to 1.5°C. Current policies project ~2.7°C of warming by 2100. But every tenth of a degree matters — and the difference between 2.0°C and 2.5°C is measured in lives, ecosystems, and economic costs of trillions of dollars."</p>
+    <div class="blockquote-source">UNEP Emissions Gap Report, 2024</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================
+     DATA
+     ============================================ -->
+<section class="section" id="data">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-title">Data: The Numbers That Define the Crisis</h2>
+  <p class="section-subtitle">Interactive charts built from NASA GISS, NOAA, Mauna Loa Observatory, and IPCC datasets. Hover, explore, and understand the evidence directly.</p>
+
+  <!-- Global Temperature Records -->
+  <div class="chart-container" style="margin-bottom: 32px;">
+    <div class="chart-label">Global Mean Surface Temperature Anomaly · 1880–2024 · NASA GISS</div>
+    <canvas id="tempAnomalyChart" aria-label="Temperature anomaly chart 1880-2024 showing accelerating warming"></canvas>
+  </div>
+
+  <div class="card-grid col-2" style="margin-bottom: 32px;">
+    <div class="chart-container">
+      <div class="chart-label">Annual CO₂ Emissions by Source (GtCO₂) · Global Carbon Project</div>
+      <canvas id="emissionsChart" aria-label="CO2 emissions by source over time"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-label">Arctic Sea Ice Extent (September Minimum, Million km²) · NSIDC</div>
+      <canvas id="arcticChart" aria-label="Arctic sea ice decline chart"></canvas>
+    </div>
+  </div>
+
+  <!-- Energy Mix -->
+  <div class="chart-container" style="margin-bottom: 32px;">
+    <div class="chart-label">Global Primary Energy Mix · 2000 vs 2024 · IEA / Energy Institute</div>
+    <canvas id="energyMixChart" aria-label="Energy mix comparison chart 2000 vs 2024"></canvas>
+  </div>
+
+  <div class="card-grid col-4" style="margin-top: 48px;">
+    <div class="card" style="text-align: center;">
+      <div class="card-num" style="font-size: 36px;">1.2°C</div>
+      <div class="card-text">Current warming above pre-industrial (2024 avg)</div>
+    </div>
+    <div class="card" style="text-align: center;">
+      <div class="card-num" style="font-size: 36px;">+50%</div>
+      <div class="card-text">CO₂ increase since 1750 (280→421 ppm)</div>
+    </div>
+    <div class="card" style="text-align: center;">
+      <div class="card-num" style="font-size: 36px;">~2.7°C</div>
+      <div class="card-text">Projected warming by 2100 under current policies</div>
+    </div>
+    <div class="card" style="text-align: center;">
+      <div class="card-num" style="font-size: 36px;">~7 yrs</div>
+      <div class="card-text">Remaining 1.5°C carbon budget at current rates</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Thermal Pulse · Global Warming Overview</div>
+      <div class="footer-text" style="margin-top: 4px;">Data sourced from IPCC AR6, NASA GISS, NOAA, Global Carbon Project, IEA, WMO, NSIDC</div>
+    </div>
+    <div style="display: flex; gap: 32px; align-items: center;">
+      <ul class="footer-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#science">Science</a></li>
+        <li><a href="#impacts">Impacts</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#data">Data</a></li>
+      </ul>
+      <div class="footer-text">© 2025</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     CHARTS JAVASCRIPT
+     ============================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Chart.js defaults — Thermal Pulse theme
+  Chart.defaults.color = '#a8a7d5';
+  Chart.defaults.borderColor = '#44446c';
+  Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+  Chart.defaults.font.size = 12;
+  Chart.defaults.plugins.tooltip.backgroundColor = '#1c1c3d';
+  Chart.defaults.plugins.tooltip.borderColor = '#44446c';
+  Chart.defaults.plugins.tooltip.borderWidth = 1;
+  Chart.defaults.plugins.tooltip.titleFont = { family: "'Space Grotesk', sans-serif", size: 13, weight: '600' };
+  Chart.defaults.plugins.tooltip.bodyFont = { family: "'IBM Plex Sans', sans-serif", size: 12 };
+  Chart.defaults.plugins.tooltip.padding = 12;
+  Chart.defaults.plugins.tooltip.cornerRadius = 0;
+
+  // ========================================
+  // 1. WARMING TREND CHART (intro section)
+  // ========================================
+  new Chart(document.getElementById('warmingTrendChart'), {
+    type: 'line',
+    data: {
+      labels: ['1880','1890','1900','1910','1920','1930','1940','1950','1960','1970','1980','1990','2000','2010','2020','2024'],
+      datasets: [{
+        label: 'Temperature Anomaly (°C)',
+        data: [-0.15,-0.12,-0.08,-0.14,-0.10,-0.05,0.05,-0.02,0.03,0.05,0.26,0.45,0.51,0.72,0.98,1.20],
+        borderColor: '#ff7c65',
+        backgroundColor: 'rgba(255,124,101,0.1)',
+        borderWidth: 2.5,
+        pointRadius: 3,
+        pointBackgroundColor: '#ff7c65',
+        pointBorderColor: '#0c0c1f',
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + '°C' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  // ========================================
+  // 2. CO₂ CHART (science section)
+  // ========================================
+  const co2Years = [];
+  const co2Data = [];
+  for (let y = 1; y <= 2024; y += 20) co2Years.push(y);
+  // Ice core + direct measurement data points
+  const co2Approx = [
+    278,278,278,278,278,278,278,278,278,278,278,278,278,278,278,278,278,278,278,278,
+    278,278,278,278,278,278,278,278,279,279,280,280,280,281,281,282,282,283,284,285,
+    286,287,288,289,290,291,292,294,296,298,300,303,306,309,312,315,318,322,325,329,
+    333,337,341,345,349,353,357,361,365,369,373,377,381,385,389,393,397,401,405,409,
+    413,417,421
+  ];
+
+  new Chart(document.getElementById('co2Chart'), {
+    type: 'line',
+    data: {
+      labels: ['1','200','400','600','800','1000','1200','1400','1600','1750','1800','1850','1900','1920','1940','1950','1960','1970','1980','1990','2000','2005','2010','2015','2020','2024'],
+      datasets: [{
+        label: 'Atmospheric CO₂ (ppm)',
+        data: [278,279,279,278,279,280,280,280,278,277,281,284,294,302,310,310,316,325,338,354,369,379,389,400,414,421],
+        borderColor: '#ffb875',
+        backgroundColor: 'rgba(255,184,117,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 3,
+        pointBackgroundColor: '#ffb875',
+        pointBorderColor: '#0c0c1f',
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          min: 260,
+          max: 440,
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + ' ppm' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        annotation: undefined
+      }
+    }
+  });
+
+  // ========================================
+  // 3. SCENARIOS CHART (impacts section)
+  // ========================================
+  new Chart(document.getElementById('scenariosChart'), {
+    type: 'line',
+    data: {
+      labels: ['2000','2010','2020','2030','2040','2050','2060','2070','2080','2090','2100'],
+      datasets: [
+        {
+          label: 'SSP1-1.9 (Very Low)',
+          data: [0.5,0.7,1.0,1.2,1.3,1.4,1.4,1.3,1.3,1.2,1.1],
+          borderColor: '#65ffc8',
+          borderWidth: 2,
+          borderDash: [6,3],
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'SSP1-2.6 (Low)',
+          data: [0.5,0.7,1.0,1.3,1.6,1.8,1.9,1.9,1.9,1.8,1.8],
+          borderColor: '#65ffc8',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'SSP2-4.5 (Intermediate)',
+          data: [0.5,0.7,1.0,1.3,1.8,2.1,2.5,2.7,2.9,3.1,3.2],
+          borderColor: '#ffb875',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'SSP3-7.0 (High)',
+          data: [0.5,0.7,1.0,1.4,2.0,2.6,3.1,3.6,4.0,4.4,4.7],
+          borderColor: '#ff7c65',
+          borderWidth: 2.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'SSP5-8.5 (Very High)',
+          data: [0.5,0.7,1.0,1.5,2.1,2.8,3.5,4.2,4.8,5.4,5.8],
+          borderColor: '#fd6f85',
+          borderWidth: 2,
+          borderDash: [4,4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + '°C' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            pointStyleWidth: 12,
+            padding: 16,
+            font: { family: "'IBM Plex Sans', sans-serif", size: 11 }
+          }
+        }
+      }
+    }
+  });
+
+  // ========================================
+  // 4. TEMPERATURE ANOMALY (data section)
+  // ========================================
+  const tempYears = [];
+  const tempValues = [];
+  for (let y = 1880; y <= 2024; y++) tempYears.push(y);
+
+  // Realistic annual temp anomaly data (approximate from NASA GISS)
+  const baseAnomalies = [
+    -0.17,-0.09,-0.10,-0.18,-0.27,-0.33,-0.30,-0.35,-0.20,-0.10,-0.37,-0.24,-0.28,-0.32,-0.32,-0.25,-0.14,-0.11,-0.28,-0.17,-0.09,-0.16,-0.28,-0.37,-0.47,-0.33,-0.24,-0.42,-0.44,-0.48,-0.42,-0.44,-0.36,-0.35,-0.18,-0.12,-0.35,-0.42,-0.34,-0.28,-0.27,-0.21,-0.29,-0.28,-0.29,-0.21,-0.09,-0.19,-0.20,-0.36,-0.15,-0.09,-0.15,-0.28,-0.13,-0.18,-0.14,-0.02,0.03,-0.02,0.07,0.18,0.09,0.10,-0.08,-0.12,-0.07,-0.04,0.04,-0.03,-0.18,0.01,-0.02,0.07,-0.12,-0.13,-0.20,0.04,0.06,-0.02,-0.03,0.06,-0.02,0.07,0.05,-0.10,-0.04,-0.02,0.00,-0.04,0.02,-0.10,0.01,0.15,-0.08,0.00,-0.12,0.18,0.07,0.14,0.27,0.33,0.13,0.30,0.15,0.12,0.19,0.33,0.39,0.26,0.44,0.40,0.63,0.55,0.54,0.64,0.62,0.63,0.50,0.59,0.71,0.57,0.61,0.65,0.65,0.72,0.78,0.85,0.82,0.98,1.02,0.95,0.89,0.91,1.02,1.17,1.24,1.21,1.20
+  ];
+
+  const anomalyColors = baseAnomalies.map(v => {
+    if (v < 0) return '#44446c';
+    if (v < 0.4) return '#ffb875';
+    if (v < 0.8) return '#ff7c65';
+    return '#fd6f85';
+  });
+
+  new Chart(document.getElementById('tempAnomalyChart'), {
+    type: 'bar',
+    data: {
+      labels: tempYears.filter((y,i) => i % 5 === 0),
+      datasets: [{
+        label: 'Temperature Anomaly (°C)',
+        data: baseAnomalies.filter((v,i) => i % 5 === 0),
+        backgroundColor: anomalyColors.filter((v,i) => i % 5 === 0),
+        borderWidth: 0,
+        barPercentage: 0.9,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + '°C' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  // ========================================
+  // 5. EMISSIONS BY SOURCE (data section)
+  // ========================================
+  new Chart(document.getElementById('emissionsChart'), {
+    type: 'line',
+    data: {
+      labels: ['1960','1970','1980','1990','2000','2010','2020','2024'],
+      datasets: [
+        {
+          label: 'Coal',
+          data: [4.5,5.8,7.8,9.0,9.2,13.5,14.5,15.2],
+          borderColor: '#fd6f85',
+          backgroundColor: 'rgba(253,111,133,0.08)',
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Oil',
+          data: [3.0,5.5,7.5,8.5,9.8,10.8,10.5,11.2],
+          borderColor: '#ff7c65',
+          backgroundColor: 'rgba(255,124,101,0.08)',
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Gas',
+          data: [0.8,1.5,2.5,3.5,4.8,6.5,7.5,7.8],
+          borderColor: '#ffb875',
+          backgroundColor: 'rgba(255,184,117,0.08)',
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Land Use',
+          data: [3.5,3.2,3.0,3.2,3.0,2.8,2.5,2.4],
+          borderColor: '#65ffc8',
+          backgroundColor: 'rgba(101,255,200,0.05)',
+          borderWidth: 2,
+          pointRadius: 3,
+          fill: true,
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          stacked: true,
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + ' Gt' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            pointStyleWidth: 10,
+            padding: 12,
+            font: { family: "'IBM Plex Sans', sans-serif", size: 10 }
+          }
+        }
+      }
+    }
+  });
+
+  // ========================================
+  // 6. ARCTIC SEA ICE (data section)
+  // ========================================
+  new Chart(document.getElementById('arcticChart'), {
+    type: 'line',
+    data: {
+      labels: ['1980','1985','1990','1995','2000','2005','2010','2015','2020','2024'],
+      datasets: [{
+        label: 'September Minimum Extent (million km²)',
+        data: [7.85,7.20,6.90,6.55,6.32,5.57,4.93,4.63,3.92,4.01],
+        borderColor: '#65ffc8',
+        backgroundColor: 'rgba(101,255,200,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 4,
+        pointBackgroundColor: '#65ffc8',
+        pointBorderColor: '#0c0c1f',
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          min: 2,
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + 'M km²' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  // ========================================
+  // 7. ENERGY MIX COMPARISON (data section)
+  // ========================================
+  new Chart(document.getElementById('energyMixChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Oil','Coal','Gas','Nuclear','Hydro','Wind','Solar','Other Renewables','Traditional Biomass'],
+      datasets: [
+        {
+          label: '2000',
+          data: [39,23,21,7,6,0.1,0.01,0.5,8],
+          backgroundColor: '#44446c',
+          borderWidth: 0
+        },
+        {
+          label: '2024',
+          data: [31,26,23,4,7,3.5,2.8,1.5,6],
+          backgroundColor: '#ff7c65',
+          borderWidth: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        y: {
+          grid: { color: 'rgba(114,113,156,0.15)' },
+          ticks: { callback: v => v + '%' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            pointStyleWidth: 10,
+            padding: 16,
+            font: { family: "'IBM Plex Sans', sans-serif", size: 11 }
+          }
+        }
+      }
+    }
+  });
+
+  // ========================================
+  // MOBILE NAV TOGGLE
+  // ========================================
+  const navToggle = document.getElementById('navToggle');
+  const nav = document.getElementById('nav');
+  const navLinks = document.getElementById('navLinks').querySelectorAll('a');
+
+  navToggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Highlight active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = 'overview';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 80;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>
